@@ -3,12 +3,13 @@ Service to use Janitza Meters with Venus OS
 ![Picture](https://github.com/patrick-dmxc/VenusOS-Janitza-UMG-96-RM/blob/main/Picture%201.png?raw=true)
 
 ## Installation
-1. Copy JanitzaUmg96RM.py to the directory /opt/victronenergy/dbus-modbus-client/
-2. Delete the __pycache__ folder from the same directory
-3. Add the line "import JanitzaUmg96RM" after "import carlo_gavazzi" in the file dbus-modbus-client.py
-4. Reboot the Cerbo GX
+1. Download the JanitzaUmg96RM.py: `wget https://raw.githubusercontent.com/patrick-dmxc/VenusOS-Janitza/refs/heads/main/JanitzaUmg96RM.py`
+2. Copy JanitzaUmg96RM.py to the victron directory: `cp JanitzaUmg96RM.py /opt/victronenergy/dbus-modbus-client/`
+3. Delete or rename the `__pycache__` folder from the same directory
+4. Add the line `import JanitzaUmg96RM` after `import carlo_gavazzi` in the file `dbus-modbus-client.py`
+5. Reboot the Cerbo GX
 
-## Suportet Meters
+## Supported Meters
 UMG 96 RM [all variations with Modbus RTU or Modbus TCP]\
 UMG 96 PQ [all variations with Modbus RTU or Modbus TCP] (untested)
 
