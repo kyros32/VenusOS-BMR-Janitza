@@ -5,8 +5,10 @@ Service to use Janitza Meters with Venus OS
 
 ## Automatic Installation to Survive Firmware Updates
 1. Place sript called `install-janitza.sh` which mimics manual installation flow into `/data` directory by running these commands
-   `cd /data`
-   `wget -q -O "$LOCAL_DRIVER" "$RAW_URL"`
+   ```
+   cd /data
+   wget https://raw.githubusercontent.com/kyros32/VenusOS-Janitza/main/install-janitza.sh -O install-janitza.sh
+   ```
 3. make `/data/install-janitza.sh` file executable by `chmod +x /data/install-janitza.sh`
 4. add following lines to `/data/rcS.local` via nano editor using command `nano /data/rcS.local`
   ```
@@ -20,7 +22,7 @@ Service to use Janitza Meters with Venus OS
 
 
 ## Manual Installation
-1. Download the JanitzaUmg96RM.py: `wget https://raw.githubusercontent.com/patrick-dmxc/VenusOS-Janitza/refs/heads/main/JanitzaUmg96RM.py`
+1. Download the JanitzaUmg96RM.py: `wget https://raw.githubusercontent.com/kyros32/VenusOS-Janitza/main/JanitzaUmg96RM.py`
 2. Copy JanitzaUmg96RM.py to the victron directory: `cp JanitzaUmg96RM.py /opt/victronenergy/dbus-modbus-client/`
 3. Delete or rename the `__pycache__` folder from the same directory
 4. Add the line `import JanitzaUmg96RM` after `import carlo_gavazzi` in the file `dbus-modbus-client.py`
