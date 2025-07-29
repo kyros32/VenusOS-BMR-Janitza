@@ -5,7 +5,7 @@ Service to use Janitza Meters with Venus OS
 
 ## Automatic Installation to Survive Firmware Updates
 1. Place sript called `install-janitza.sh` which mimics manual installation flow into `/data` directory
-2. make `data/install-janitza.sh` file executable by `chmod +x /data/install-janitza.sh`
+2. make `/data/install-janitza.sh` file executable by `chmod +x /data/install-janitza.sh`
 3. add following lines to `/data/rcS.local` via nano editor using command `nano /data/rcS.local`
   ```
     #!/bin/sh
@@ -14,6 +14,7 @@ Service to use Janitza Meters with Venus OS
   ```
 5. make `/data/rcS.local` file executable by `chmod +x /data/rcS.local`
 6. reboot
+7. everything in the section below called "Manual Installation" should be taken care of
 
 
 ## Manual Installation
