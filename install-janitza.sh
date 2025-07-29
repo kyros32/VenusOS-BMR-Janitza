@@ -3,7 +3,7 @@ set -e
 
 # Configuration
 DATA_DIR="/data/janitza"
-RAW_URL="https://raw.githubusercontent.com/patrick-dmxc/VenusOS-Janitza/main/JanitzaUmg96RM.py"
+RAW_URL="https://raw.githubusercontent.com/kyros32/VenusOS-Janitza/main/JanitzaUmg96RM.py"
 TARGET_DIR="/opt/victronenergy/dbus-modbus-client"
 CLIENT_PY="$TARGET_DIR/dbus-modbus-client.py"
 DRIVER_DST="$TARGET_DIR/JanitzaUmg96RM.py"
