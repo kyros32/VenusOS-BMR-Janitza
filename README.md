@@ -7,9 +7,11 @@ Service to use Janitza Meters with Venus OS
 1. Place sript called `install-janitza.sh` which mimics manual installation flow into `/data` directory
 2. `chmod +x /data/install-janitza.sh`
 3. add following lines to /data/rcS.local via nano editor
-  `#!/bin/sh
-   `# Custom startup script`
-   `/data/install-janitza.sh`
+  ```
+    #!/bin/sh
+    # Custom startup script
+    /data/install-janitza.sh
+  ```
 5. `chmod +x /data/rcS.local`
 
 
