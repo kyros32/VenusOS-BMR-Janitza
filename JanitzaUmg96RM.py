@@ -43,9 +43,9 @@ class JANITZA_UMG_96RM(device.EnergyMeter):
         log.info('Janitza Probing')
         try:
             self.info_regs = [
-                Reg_u16(751, '/HardwareVersion'),
-                Reg_u16(750, '/FirmwareVersion'),
-                Reg_u32b(754, '/Serial'),
+                Reg_u32b(42400, '/HardwareVersion'),
+                Reg_u32b(42402, '/FirmwareVersion'),
+                Reg_u32b(42404, '/Serial'),
             ]
         except:
             log.info('Exception while Janitza Probing')
@@ -241,12 +241,24 @@ models96PQ = {
     },
 }
 
+modelsBMR = {    
+    1162001: {
+        'model':    'BMR PLA33',
+        'handler':  JANITZA_UMG_96RM,
+    },
+}
+
 probe.add_handler(probe.ModelRegister(Reg_s32b(769), models96RM,
                                       methods=['rtu','tcp'],
                                       rates=[115200],
                                       units=[1]))
 
-probe.add_handler(probe.ModelRegister(Reg_s32b(194), models96PQ,
+probe.add_handler(probe.ModelRegister(Reg_s32b(194), modelsBMR,
+                                      methods=['rtu','tcp'],
+                                      rates=[115200],
+                                      units=[1]))
+
+probe.add_handler(probe.ModelRegister(Reg_s32b(42406), modelsBMR,
                                       methods=['rtu','tcp'],
                                       rates=[115200],
                                       units=[1]))
