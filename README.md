@@ -31,6 +31,7 @@ Service to use Janitza Meters with Venus OS
 ## Supported Meters
 UMG 96 RM [all variations with Modbus RTU or Modbus TCP]\
 UMG 96 PQ [all variations with Modbus RTU or Modbus TCP] (untested)
+BMR PLA33 [all variations with Modbus RTU or Modbus TCP] (untested)
 
 ## Issues
 If its not working, please open an issue and we can fix it
