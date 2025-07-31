@@ -30,6 +30,8 @@ class Reg_f32b(Reg_num): # Works in 3.13
     rtype = float
 
 class JANITZA_UMG_96RM(device.EnergyMeter):
+    vendor_id = 'ja'
+    vendor_name = 'Janitza'
     productid = 0xFFFF
     productname = 'Janitza UMG 96 RM'
     min_timeout = 0.5
@@ -96,9 +98,11 @@ class JANITZA_UMG_96RM(device.EnergyMeter):
         log.info('Janitza device init done')
 
     def get_ident(self):
-        return 'cg_%s' % self.info['/Serial']
+        return f"{self.vendor_id}_{self.info['/Serial']}"
 
 class JANITZA_UMG_96PQ(device.EnergyMeter):
+    vendor_id = 'ja'
+    vendor_name = 'Janitza'
     productid = 0xFFFF
     productname = 'Janitza UMG 96 PQ'
     min_timeout = 0.5
@@ -165,7 +169,7 @@ class JANITZA_UMG_96PQ(device.EnergyMeter):
         log.info('Janitza device init done')
 
     def get_ident(self):
-        return 'cg_%s' % self.info['/Serial']
+        return f"{self.vendor_id}_{self.info['/Serial']}"
 
 class BMR_PLA(device.EnergyMeter):
     vendor_id = 'bmr'
@@ -236,7 +240,7 @@ class BMR_PLA(device.EnergyMeter):
         log.info('BMR PLA device init done')
 
     def get_ident(self):
-        return 'cg_%s' % self.info['/Serial']
+        return f"{self.vendor_id}_{self.info['/Serial']}"
 
 models96RM = {
     5222036: {
