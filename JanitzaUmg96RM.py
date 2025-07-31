@@ -322,7 +322,7 @@ probe.add_handler(probe.ModelRegister(Reg_s32b(769), models96RM,
                                       rates=[115200],
                                       units=[1]))
 
-probe.add_handler(probe.ModelRegister(Reg_s32b(194), modelsBMR,
+probe.add_handler(probe.ModelRegister(Reg_s32b(194), models96PQ,
                                       methods=['rtu','tcp'],
                                       rates=[115200],
                                       units=[1]))
