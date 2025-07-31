@@ -1,7 +1,6 @@
 #!/bin/sh
-set -e
+set -euo pipefail
 
-# Configuration
 DATA_DIR="/data/janitza"
 RAW_URL="https://raw.githubusercontent.com/kyros32/VenusOS-Janitza/main/JanitzaUmg96RM.py"
 TARGET_DIR="/opt/victronenergy/dbus-modbus-client"
@@ -9,38 +8,44 @@ CLIENT_PY="$TARGET_DIR/dbus-modbus-client.py"
 DRIVER_DST="$TARGET_DIR/JanitzaUmg96RM.py"
 LOCAL_DRIVER="$DATA_DIR/JanitzaUmg96RM.py"
 
-# 1) Ensure data directory exists
 mkdir -p "$DATA_DIR"
 
-# 2) Download fresh copy of the driver only if missing
-if [ ! -f "$LOCAL_DRIVER" ]; then
-    echo "Fetching JanitzaUmg96RM.py…"
+# Always fetch latest
+echo "Downloading driver to $LOCAL_DRIVER…"
+if command -v wget >/dev/null; then
     wget -q -O "$LOCAL_DRIVER" "$RAW_URL"
+elif command -v curl >/dev/null; then
+    curl -fsSL "$RAW_URL" -o "$LOCAL_DRIVER"
 else
-    echo "Driver already exists in $DATA_DIR, skipping download."
+    echo "Error: neither wget nor curl is available." >&2
+    exit 1
 fi
 
-# 3) Copy it into Victron’s modbus-client folder
-echo "Installing to $TARGET_DIR…"
+# Verify target dir
+if [ ! -d "$TARGET_DIR" ]; then
+    echo "Error: target directory $TARGET_DIR not found." >&2
+    exit 1
+fi
+
+echo "Installing driver to $TARGET_DIR…"
 cp -f "$LOCAL_DRIVER" "$DRIVER_DST"
+chmod 644 "$DRIVER_DST"
 
-# 4) Remove stale bytecode
-if [ -d "$TARGET_DIR/__pycache__" ]; then
-    echo "Cleaning __pycache__…"
-    rm -rf "$TARGET_DIR/__pycache__"
-fi
+echo "Cleaning up old bytecode…"
+find "$TARGET_DIR" -type d -name "__pycache__" -exec rm -rf {} +
 
-# 5) Inject import if missing
 IMPORT_LINE="import JanitzaUmg96RM"
 if ! grep -qF "$IMPORT_LINE" "$CLIENT_PY"; then
-    echo "Adding import to dbus-modbus-client.py…"
-    sed -i "/import carlo_gavazzi/a $IMPORT_LINE" "$CLIENT_PY"
+    # Insert after the last existing import
+    sed -i "/^import /a $IMPORT_LINE" "$CLIENT_PY"
+    echo "Injected import into dbus-modbus-client.py"
 fi
 
-# 6) (Optional) restart the service so changes take effect immediately
-if command -v supervisorctl >/dev/null 2>&1; then
-    echo "Restarting dbus-modbus-client…"
-    supervisorctl restart dbus-modbus-client || true
+# Restart service
+if command -v systemctl >/dev/null 2>&1; then
+    systemctl restart dbus-modbus-client.service || echo "Warning: failed to restart via systemctl" >&2
+elif command -v supervisorctl >/dev/null 2>&1; then
+    supervisorctl restart dbus-modbus-client || echo "Warning: failed to restart via supervisorctl" >&2
 fi
 
 echo "Janitza driver update complete."
