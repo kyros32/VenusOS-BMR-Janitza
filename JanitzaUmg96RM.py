@@ -168,6 +168,8 @@ class JANITZA_UMG_96PQ(device.EnergyMeter):
         return 'cg_%s' % self.info['/Serial']
 
 class BMR_PLA(device.EnergyMeter):
+    vendor_id = 'bmr'
+    vendor_name = 'BMR'
     productid = 0xFFFF
     productname = 'BMR PLA'
     min_timeout = 0.5
