@@ -8,9 +8,17 @@ CLIENT_PY="$TARGET_DIR/dbus-modbus-client.py"
 DRIVER_DST="$TARGET_DIR/JanitzaUmg96RM.py"
 LOCAL_DRIVER="$DATA_DIR/JanitzaUmg96RM.py"
 
+# 1) Ensure data directory exists
 mkdir -p "$DATA_DIR"
 
-# Always fetch latest
+# 2) Wait for network to be up
+echo "Waiting for network connectivity…"
+until connmanctl state | grep -q 'State = ready'; do
+    sleep 15
+done
+echo "Network is up, proceeding with download."
+
+# 3) Always fetch latest
 echo "Downloading driver to $LOCAL_DRIVER…"
 if command -v wget >/dev/null; then
     wget -q -O "$LOCAL_DRIVER" "$RAW_URL"
@@ -21,19 +29,22 @@ else
     exit 1
 fi
 
-# Verify target dir
+# 4) Verify target dir
 if [ ! -d "$TARGET_DIR" ]; then
     echo "Error: target directory $TARGET_DIR not found." >&2
     exit 1
 fi
 
+# 5) Install driver
 echo "Installing driver to $TARGET_DIR…"
 cp -f "$LOCAL_DRIVER" "$DRIVER_DST"
 chmod 644 "$DRIVER_DST"
 
+# 6) Cleanup old bytecode
 echo "Cleaning up old bytecode…"
 find "$TARGET_DIR" -type d -name "__pycache__" -exec rm -rf {} +
 
+# 7) Inject import if missing
 IMPORT_LINE="import JanitzaUmg96RM"
 if ! grep -qF "$IMPORT_LINE" "$CLIENT_PY"; then
     # Insert after the last existing import
@@ -41,11 +52,17 @@ if ! grep -qF "$IMPORT_LINE" "$CLIENT_PY"; then
     echo "Injected import into dbus-modbus-client.py"
 fi
 
-# Restart service
-if command -v systemctl >/dev/null 2>&1; then
-    systemctl restart dbus-modbus-client.service || echo "Warning: failed to restart via systemctl" >&2
+# 8) Restart service (using sv/svc if available)
+if command -v sv >/dev/null 2>&1; then
+    sv restart dbus-modbus-client
+elif command -v svc >/dev/null 2>&1; then
+    svc -t /service/dbus-modbus-client
+elif command -v systemctl >/dev/null 2>&1; then
+    systemctl restart dbus-modbus-client.service || echo "Warning: systemctl restart failed" >&2
 elif command -v supervisorctl >/dev/null 2>&1; then
-    supervisorctl restart dbus-modbus-client || echo "Warning: failed to restart via supervisorctl" >&2
+    supervisorctl restart dbus-modbus-client || echo "Warning: supervisorctl restart failed" >&2
+else
+    echo "Warning: no known service manager found; please restart dbus-modbus-client manually." >&2
 fi
 
 echo "Janitza driver update complete."
