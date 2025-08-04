@@ -10,9 +10,9 @@ Service to use Janitza Meters with Venus OS
    wget https://raw.githubusercontent.com/kyros32/VenusOS-Janitza/main/install-janitza.sh -O install-janitza.sh
    ```
 3. make `/data/install-janitza.sh` file executable by `chmod +x /data/install-janitza.sh`
-4. copy `rcS.local` to `/data` folder, otherwise it will be created during install
+4. copy `rcS.local` to `/data` folder, otherwise it will be created during install and injected into the current one (if it exists)
 5. make `/data/rcS.local` file executable by `chmod +x /data/rcS.local`
-6. run  the install script by `./data/install-janitza.sh` command
+6. run  the install script by `./install-janitza.sh` command
 7. reboot
 8. everything in the section below called "Manual Installation" should be taken care of
 
