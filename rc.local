@@ -1,0 +1,28 @@
+#!/bin/sh
+# Custom startup script – always run, detached from console,
+# logging to /data/janitza/install-janitza.log and retrying until success
+
+LOGDIR="/data/janitza"
+LOGFILE="$LOGDIR/install-janitza.log"
+INSTALLER="/data/install-janitza.sh"
+
+# Ensure the log directory exists
+mkdir -p "$LOGDIR"
+
+# Launch in background so rc.local never blocks or fails
+(
+  # Loop until installer exits zero
+  while true; do
+    echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')] Running install-janitza.sh…" >>"$LOGFILE"
+    if sh "$INSTALLER" >>"$LOGFILE" 2>&1; then
+      echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')] Success, exiting loop." >>"$LOGFILE"
+      break
+    else
+      echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')] Installer failed, retrying in 30s…" >>"$LOGFILE"
+      sleep 30
+    fi
+  done
+)&
+
+# rc.local itself always exits zero, so boot never stalls
+exit 0
