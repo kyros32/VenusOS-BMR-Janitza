@@ -224,7 +224,7 @@ class BMR_PLA(device.EnergyMeter):
             gRegs = [
                 Reg_f32b(19026, '/Ac/Power',          1, '%.3f W'),
                 Reg_f32b(19018, '/Ac/Current',        1, '%.3f A'),
-                Reg_f32b(19050, '/Ac/Frequency',      1, '%.3f Hz'),
+                Reg_f32b(30154, '/Ac/Frequency',      1, '%.3f Hz'),
                 Reg_f32b(19068, '/Ac/Energy/Forward', 1000, '%.3f kWh'),
                 Reg_f32b(19076, '/Ac/Energy/Reverse', 1000, '%.3f kWh'),
             ]
