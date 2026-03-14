@@ -3,6 +3,10 @@
 # Define the package name and log file location for SetupHelper
 packageLogFile="/var/log/Janitza/current"
 
+# GitHub automatic updates config
+packageGitHubUser="kyros32"
+packageGitHubRepo="VenusOS-BMR-Janitza"
+
 # Include the SetupHelper utilities
 # This handles the background persistence during firmware updates automatically
 source "/data/SetupHelper/HelperResources/IncludeHelpers"
@@ -19,7 +23,7 @@ packageAction() {
             logMessage "Installing Janitza UMG 96 RM Driver"
             
             # 1. Copy the Python driver to the Victron Modbus client directory
-            cp "$setupFolder/$DRIVER_FILE" "$TARGET_DIR/"
+            cp "$scriptDir/$DRIVER_FILE" "$TARGET_DIR/"
             chmod 644 "$TARGET_DIR/$DRIVER_FILE"
             
             # 2. Inject the import into dbus-modbus-client.py if it's missing
@@ -35,7 +39,11 @@ packageAction() {
                 logMessage "Import already exists in $CLIENT_PY"
             fi
             
-            # 3. Restart the service to apply changes
+            # 3. Remove ALL old compiled bytecode to ensure new code & modified client are loaded
+            logMessage "Clearing python cache"
+            rm -rf "$TARGET_DIR/__pycache__/"
+            
+            # 4. Restart the service to apply changes
             logMessage "Restarting dbus-modbus-client service"
             svc -t /service/dbus-modbus-client
             ;;
@@ -46,9 +54,9 @@ packageAction() {
             # 1. Remove the injected line
             sed -i "/import JanitzaUmg96RM/d" "$CLIENT_PY"
             
-            # 2. Remove the python file and any cached bytecode
+            # 2. Remove the python driver and ALL cached bytecode
             rm -f "$TARGET_DIR/$DRIVER_FILE"
-            rm -f "$TARGET_DIR/__pycache__/JanitzaUmg96RM.*"
+            rm -rf "$TARGET_DIR/__pycache__/"
             
             # 3. Restart the service
             logMessage "Restarting dbus-modbus-client service"
