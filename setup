@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Explicitly define the directory where this setup script is located
+setupFolder=$(dirname "$0")
+
 # Define the package name and log file location for SetupHelper
 packageLogFile="/var/log/Janitza/current"
 
@@ -23,7 +26,8 @@ packageAction() {
             logMessage "Installing Janitza UMG 96 RM Driver"
             
             # 1. Copy the Python driver to the Victron Modbus client directory
-            cp "$scriptDir/$DRIVER_FILE" "$TARGET_DIR/"
+            logMessage "Copying $DRIVER_FILE to $TARGET_DIR"
+            cp "$setupFolder/$DRIVER_FILE" "$TARGET_DIR/"
             chmod 644 "$TARGET_DIR/$DRIVER_FILE"
             
             # 2. Inject the import into dbus-modbus-client.py if it's missing
@@ -43,9 +47,9 @@ packageAction() {
             logMessage "Clearing python cache"
             rm -rf "$TARGET_DIR/__pycache__/"
             
-            # 4. Restart the service to apply changes
-            logMessage "Restarting dbus-modbus-client service"
-            svc -t /service/dbus-modbus-client
+            # 4. Restart the system to apply changes cleanly
+            logMessage "Rebooting system..."
+            reboot
             ;;
             
         uninstall)
@@ -55,12 +59,13 @@ packageAction() {
             sed -i "/import JanitzaUmg96RM/d" "$CLIENT_PY"
             
             # 2. Remove the python driver and ALL cached bytecode
+            logMessage "Removing $DRIVER_FILE from $TARGET_DIR"
             rm -f "$TARGET_DIR/$DRIVER_FILE"
             rm -rf "$TARGET_DIR/__pycache__/"
             
-            # 3. Restart the service
-            logMessage "Restarting dbus-modbus-client service"
-            svc -t /service/dbus-modbus-client
+            # 3. Restart the system to apply changes cleanly
+            logMessage "Rebooting system..."
+            reboot
             ;;
     esac
 }
