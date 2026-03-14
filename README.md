@@ -1,5 +1,5 @@
-# VenusOS-Janitza
-Service to use Janitza Meters with Venus OS
+# VenusOS-BMR-Janitza
+Service to use Janitza and BMR Meters with Venus OS
 ![Picture](https://github.com/patrick-dmxc/VenusOS-Janitza-UMG-96-RM/blob/main/Picture%201.png?raw=true)
 
 ## Installation (SetupHelper)
@@ -12,7 +12,8 @@ You must have [SetupHelper installed](https://github.com/kwindrem/SetupHelper) o
 1. Connect to your Cerbo GX via SSH.
 2. Run the following commands to download and install the package:
    ```bash
-   wget -qO - https://github.com/kyros32/VenusOS-Janitza/archive/refs/heads/main.tar.gz | tar -xzf - -C /data
-   mv /data/VenusOS-Janitza-main /data/VenusOS-Janitza
-   /data/VenusOS-Janitza/setup
+   mkdir -p /data/VenusOS-BMR-Janitza
+   wget -O - [https://github.com/kyros32/VenusOS-BMR-Janitza/archive/refs/heads/main.tar.gz](https://github.com/kyros32/VenusOS-BMR-Janitza/archive/refs/heads/main.tar.gz) | tar -xzf - -C /data/VenusOS-BMR-Janitza --strip-components=1
+   /data/VenusOS-BMR-Janitza/setup
    ```
+   
