@@ -22,6 +22,22 @@ DRIVER_FILE="JanitzaUmg96RM.py"
 # The standard SetupHelper install steps
 packageAction() {
     case $1 in
+        check)
+            # This tells the SetupHelper GUI if the package is currently "Active"
+            
+            # 1. Check if the import string exists in the main client
+            if ! grep -qF "import JanitzaUmg96RM" "$CLIENT_PY"; then
+                return 1 # 1 means No, it is not active
+            fi
+            
+            # 2. Check if the driver file exists in the target dir AND exactly matches our version
+            if ! cmp -s "$PLUGIN_DIR/$DRIVER_FILE" "$TARGET_DIR/$DRIVER_FILE"; then
+                return 1 # 1 means No, it is missing or outdated
+            fi
+            
+            return 0 # 0 means Yes, it is fully active and up-to-date
+            ;;
+            
         install)
             logMessage "Installing Janitza UMG 96 RM Driver"
             
@@ -50,9 +66,12 @@ packageAction() {
             logMessage "Clearing python cache"
             rm -rf "$TARGET_DIR/__pycache__/"
             
-            # 4. Explicitly restart the service (this forces __pycache__ to be rebuilt)
+            # 4. Explicitly restart the service
             logMessage "Restarting dbus-modbus-client service"
             svc -t /service/dbus-modbus-client
+            
+            # 5. Tell SetupHelper the installation was successful
+            return 0
             ;;
             
         uninstall)
@@ -72,6 +91,9 @@ packageAction() {
             # 3. Explicitly restart the service
             logMessage "Restarting dbus-modbus-client service"
             svc -t /service/dbus-modbus-client
+            
+            # 4. Tell SetupHelper the uninstallation was successful
+            return 0
             ;;
     esac
 }
