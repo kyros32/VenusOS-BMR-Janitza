@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Define the package name and log file location for SetupHelper
+packageLogFile="/var/log/Janitza/current"
+
+# Include the SetupHelper utilities
+# This handles the background persistence during firmware updates automatically
+source "/data/SetupHelper/HelperResources/IncludeHelpers"
+
+# Define the target directory and files
+TARGET_DIR="/opt/victronenergy/dbus-modbus-client"
+CLIENT_PY="$TARGET_DIR/dbus-modbus-client.py"
+DRIVER_FILE="JanitzaUmg96RM.py"
+
+# The standard SetupHelper install steps
+packageAction() {
+    case $1 in
+        install)
+            logMessage "Installing Janitza UMG 96 RM Driver"
+            
+            # 1. Copy the Python driver to the Victron Modbus client directory
+            cp "$setupFolder/$DRIVER_FILE" "$TARGET_DIR/"
+            chmod 644 "$TARGET_DIR/$DRIVER_FILE"
+            
+            # 2. Inject the import into dbus-modbus-client.py if it's missing
+            if ! grep -qF "import JanitzaUmg96RM" "$CLIENT_PY"; then
+                logMessage "Injecting Janitza import into $CLIENT_PY"
+                # Inject after carlo_gavazzi, or at the end of imports
+                if grep -qF "import carlo_gavazzi" "$CLIENT_PY"; then
+                    sed -i "/^import carlo_gavazzi/a import JanitzaUmg96RM" "$CLIENT_PY"
+                else
+                    sed -i "/^import /a import JanitzaUmg96RM" "$CLIENT_PY"
+                fi
+            else
+                logMessage "Import already exists in $CLIENT_PY"
+            fi
+            
+            # 3. Restart the service to apply changes
+            logMessage "Restarting dbus-modbus-client service"
+            svc -t /service/dbus-modbus-client
+            ;;
+            
+        uninstall)
+            logMessage "Uninstalling Janitza UMG 96 RM Driver"
+            
+            # 1. Remove the injected line
+            sed -i "/import JanitzaUmg96RM/d" "$CLIENT_PY"
+            
+            # 2. Remove the python file and any cached bytecode
+            rm -f "$TARGET_DIR/$DRIVER_FILE"
+            rm -f "$TARGET_DIR/__pycache__/JanitzaUmg96RM.*"
+            
+            # 3. Restart the service
+            logMessage "Restarting dbus-modbus-client service"
+            svc -t /service/dbus-modbus-client
+            ;;
+    esac
+}
+
+# Run the standard script runner provided by SetupHelper
+# This connects your packageAction to the Package Manager GUI
+endScript
