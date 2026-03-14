@@ -22,7 +22,7 @@ DRIVER_FILE="JanitzaUmg96RM.py"
 # The standard SetupHelper install steps
 packageAction() {
     case $1 in
-        check)
+        CHECK)
             # This tells the SetupHelper GUI if the package is currently "Active"
             
             # 1. Check if the import string exists in the main client
@@ -38,11 +38,8 @@ packageAction() {
             return 0 # 0 means Yes, it is fully active and up-to-date
             ;;
             
-        install)
+        INSTALL)
             logMessage "Installing Janitza UMG 96 RM Driver"
-            
-            # Force the root filesystem to be writable before we do anything
-            mount -o remount,rw /
             
             # 1. Copy the Python driver to the Victron Modbus client directory
             logMessage "Copying $PLUGIN_DIR/$DRIVER_FILE to $TARGET_DIR"
@@ -74,11 +71,8 @@ packageAction() {
             return 0
             ;;
             
-        uninstall)
+        UNINSTALL)
             logMessage "Uninstalling Janitza UMG 96 RM Driver"
-            
-            # Force the root filesystem to be writable
-            mount -o remount,rw /
             
             # 1. Remove the injected line
             sed -i "/import JanitzaUmg96RM/d" "$CLIENT_PY"
@@ -97,6 +91,10 @@ packageAction() {
             ;;
     esac
 }
+
+# *** THIS IS THE MISSING MAGIC LINE! ***
+# Execute the function we just defined using the action requested by SetupHelper
+packageAction $scriptAction
 
 # Run the standard script runner provided by SetupHelper
 # This connects your packageAction to the Package Manager GUI
