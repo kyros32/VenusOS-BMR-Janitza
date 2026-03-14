@@ -7,6 +7,14 @@ This driver is packaged to be used with [SetupHelper](https://github.com/kwindre
 
 **Prerequisites:**
 You must have [SetupHelper installed](https://github.com/kwindrem/SetupHelper) on your Cerbo GX first.
+1. Connect to your Cerbo GX via SSH.
+2. Run the following commands to download and install the package:
+   ```bash
+   wget -qO - https://github.com/kwindrem/SetupHelper/archive/latest.tar.gz | tar -xzf - -C /data
+   rm -rf /data/SetupHelper
+   mv /data/SetupHelper-latest /data/SetupHelper
+   /data/SetupHelper/setup
+   ```
 
 **Install the Driver:**
 1. Connect to your Cerbo GX via SSH.
@@ -21,7 +29,7 @@ You must have [SetupHelper installed](https://github.com/kwindrem/SetupHelper) o
 
 You can easily uninstall or update the driver directly from the touchscreen or Remote Console in the future without needing to use SSH again.
 
-**Supported Meters**
+##Supported Meters
 UMG 96 RM [all variations with Modbus RTU or Modbus TCP]
 
 UMG 96 PQ [all variations with Modbus RTU or Modbus TCP] (untested)
@@ -34,6 +42,6 @@ If its not working, please open an issue and we can fix it.
 **Your Meter is not Supported**
 Open an Issue and we can see if its possible to implement your Meter as well.
 
-**Note**
+##Note
 In the event that Victron changes, adds, or removes methods from register.py in future Venus OS updates, it is possible that the script may need adjustments to function correctly again.
    
