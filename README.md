@@ -13,7 +13,7 @@ You must have [SetupHelper installed](https://github.com/kwindrem/SetupHelper) o
 2. Run the following commands to download and install the package:
    ```bash
    mkdir -p /data/VenusOS-BMR-Janitza
-   wget -O - [https://github.com/kyros32/VenusOS-BMR-Janitza/archive/refs/heads/main.tar.gz](https://github.com/kyros32/VenusOS-BMR-Janitza/archive/refs/heads/main.tar.gz) | tar -xzf - -C /data/VenusOS-BMR-Janitza --strip-components=1
+   wget -O - https://github.com/kyros32/VenusOS-BMR-Janitza/archive/refs/heads/main.tar.gz | tar -xzf - -C /data/VenusOS-BMR-Janitza --strip-components=1
    /data/VenusOS-BMR-Janitza/setup
    ```
    
