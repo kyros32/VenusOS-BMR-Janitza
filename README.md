@@ -29,19 +29,19 @@ You must have [SetupHelper installed](https://github.com/kwindrem/SetupHelper) o
 
 You can easily uninstall or update the driver directly from the touchscreen or Remote Console in the future without needing to use SSH again.
 
-##Supported Meters
+## Supported Meters
 UMG 96 RM [all variations with Modbus RTU or Modbus TCP]
 
 UMG 96 PQ [all variations with Modbus RTU or Modbus TCP] (untested)
 
 BMR PLA33 [all variations with Modbus RTU or Modbus TCP] (untested)
 
-**Issues**
+** Issues **
 If its not working, please open an issue and we can fix it.
 
 **Your Meter is not Supported**
 Open an Issue and we can see if its possible to implement your Meter as well.
 
-##Note
+## Note
 In the event that Victron changes, adds, or removes methods from register.py in future Venus OS updates, it is possible that the script may need adjustments to function correctly again.
    
