@@ -12,7 +12,7 @@ You must have [SetupHelper installed](https://github.com/kwindrem/SetupHelper) o
 1. Connect to your Cerbo GX via SSH.
 2. Run the following commands to download and install the package:
    ```bash
-   wget -qO - [https://github.com/kyros32/VenusOS-Janitza/archive/refs/heads/main.tar.gz](https://github.com/kyros32/VenusOS-Janitza/archive/refs/heads/main.tar.gz) | tar -xzf - -C /data
+   wget -qO - https://github.com/kyros32/VenusOS-Janitza/archive/refs/heads/main.tar.gz | tar -xzf - -C /data
    mv /data/VenusOS-Janitza-main /data/VenusOS-Janitza
    /data/VenusOS-Janitza/setup
    ```
