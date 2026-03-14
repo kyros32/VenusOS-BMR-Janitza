@@ -14,6 +14,7 @@ You must have [SetupHelper installed](https://github.com/kwindrem/SetupHelper) o
    ```bash
    mkdir -p /data/VenusOS-BMR-Janitza
    wget -O - https://github.com/kyros32/VenusOS-BMR-Janitza/archive/refs/heads/main.tar.gz | tar -xzf - -C /data/VenusOS-BMR-Janitza --strip-components=1
+   chmod +x /data/VenusOS-BMR-Janitza/setup
    /data/VenusOS-BMR-Janitza/setup
    ```
    
