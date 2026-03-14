@@ -1,17 +1,11 @@
 #!/bin/bash
 
-# 1. Lock in the directory path BEFORE SetupHelper loads and overwrites variables
-PLUGIN_DIR=$(cd "$(dirname "$0")" && pwd)
-
-# Define the package name and log file location for SetupHelper
+# Setup properties for SetupHelper GUI
 packageLogFile="/var/log/Janitza/current"
-
-# GitHub automatic updates config
 packageGitHubUser="kyros32"
 packageGitHubRepo="VenusOS-BMR-Janitza"
 
 # Include the SetupHelper utilities
-# This handles the background persistence during firmware updates automatically
 source "/data/SetupHelper/HelperResources/IncludeHelpers"
 
 # Define the target directory and files
@@ -28,8 +22,8 @@ packageAction() {
             if ! grep -qF "import JanitzaUmg96RM" "$CLIENT_PY"; then
                 return 1 # 1 means No, it is not active
             fi
-            # 2. Check if the driver file exactly matches our version
-            if ! cmp -s "$PLUGIN_DIR/$DRIVER_FILE" "$TARGET_DIR/$DRIVER_FILE"; then
+            # 2. Check if the driver file exactly matches our downloaded version
+            if ! cmp -s "$scriptDir/$DRIVER_FILE" "$TARGET_DIR/$DRIVER_FILE"; then
                 return 1 # 1 means No, it is missing or outdated
             fi
             return 0 # 0 means Yes, it is fully active and up-to-date
@@ -39,8 +33,8 @@ packageAction() {
             logMessage "Installing Janitza UMG 96 RM Driver"
             
             # 1. Copy the Python driver to the Victron Modbus client directory
-            logMessage "Copying $PLUGIN_DIR/$DRIVER_FILE to $TARGET_DIR"
-            cp "$PLUGIN_DIR/$DRIVER_FILE" "$TARGET_DIR/"
+            logMessage "Copying $DRIVER_FILE to $TARGET_DIR"
+            cp "$scriptDir/$DRIVER_FILE" "$TARGET_DIR/"
             chmod 644 "$TARGET_DIR/$DRIVER_FILE"
             
             # 2. Inject the import into dbus-modbus-client.py if it's missing
@@ -63,7 +57,7 @@ packageAction() {
             logMessage "Restarting dbus-modbus-client service"
             svc -t /service/dbus-modbus-client
             
-            # 5. Tell SetupHelper to restart the GUI so the package appears in the list automatically
+            # 5. Refresh the GUI so it immediately shows as Active
             restartGui=true
             
             return 0
@@ -84,7 +78,7 @@ packageAction() {
             logMessage "Restarting dbus-modbus-client service"
             svc -t /service/dbus-modbus-client
             
-            # 4. Tell SetupHelper to restart the GUI to reflect the uninstallation
+            # 4. Refresh the GUI so it disappears immediately
             restartGui=true
             
             return 0
@@ -96,5 +90,4 @@ packageAction() {
 packageAction $scriptAction
 
 # Run the standard script runner provided by SetupHelper
-# This connects your packageAction to the Package Manager GUI
 endScript
