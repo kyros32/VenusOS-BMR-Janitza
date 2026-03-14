@@ -24,17 +24,14 @@ packageAction() {
     case $1 in
         CHECK)
             # This tells the SetupHelper GUI if the package is currently "Active"
-            
             # 1. Check if the import string exists in the main client
             if ! grep -qF "import JanitzaUmg96RM" "$CLIENT_PY"; then
                 return 1 # 1 means No, it is not active
             fi
-            
-            # 2. Check if the driver file exists in the target dir AND exactly matches our version
+            # 2. Check if the driver file exactly matches our version
             if ! cmp -s "$PLUGIN_DIR/$DRIVER_FILE" "$TARGET_DIR/$DRIVER_FILE"; then
                 return 1 # 1 means No, it is missing or outdated
             fi
-            
             return 0 # 0 means Yes, it is fully active and up-to-date
             ;;
             
@@ -49,7 +46,6 @@ packageAction() {
             # 2. Inject the import into dbus-modbus-client.py if it's missing
             if ! grep -qF "import JanitzaUmg96RM" "$CLIENT_PY"; then
                 logMessage "Injecting Janitza import into $CLIENT_PY"
-                # Inject after carlo_gavazzi, or at the end of imports
                 if grep -qF "import carlo_gavazzi" "$CLIENT_PY"; then
                     sed -i "/^import carlo_gavazzi/a import JanitzaUmg96RM" "$CLIENT_PY"
                 else
@@ -63,11 +59,13 @@ packageAction() {
             logMessage "Clearing python cache"
             rm -rf "$TARGET_DIR/__pycache__/"
             
-            # 4. Explicitly restart the service
+            # 4. Explicitly restart the Modbus service
             logMessage "Restarting dbus-modbus-client service"
             svc -t /service/dbus-modbus-client
             
-            # 5. Tell SetupHelper the installation was successful
+            # 5. Tell SetupHelper to restart the GUI so the package appears in the list automatically
+            restartGui=true
+            
             return 0
             ;;
             
@@ -82,17 +80,18 @@ packageAction() {
             rm -f "$TARGET_DIR/$DRIVER_FILE"
             rm -rf "$TARGET_DIR/__pycache__/"
             
-            # 3. Explicitly restart the service
+            # 3. Explicitly restart the Modbus service
             logMessage "Restarting dbus-modbus-client service"
             svc -t /service/dbus-modbus-client
             
-            # 4. Tell SetupHelper the uninstallation was successful
+            # 4. Tell SetupHelper to restart the GUI to reflect the uninstallation
+            restartGui=true
+            
             return 0
             ;;
     esac
 }
 
-# *** THIS IS THE MISSING MAGIC LINE! ***
 # Execute the function we just defined using the action requested by SetupHelper
 packageAction $scriptAction
 
