@@ -4,6 +4,7 @@
 packageLogFile="/var/log/Janitza/current"
 packageGitHubUser="kyros32"
 packageGitHubRepo="VenusOS-BMR-Janitza"
+packageGitHubBranch="main"
 
 # Include the SetupHelper utilities
 source "/data/SetupHelper/HelperResources/IncludeHelpers"
