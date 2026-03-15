@@ -57,15 +57,8 @@ packageAction() {
             # 4. Explicitly restart the Modbus service
             logMessage "Restarting dbus-modbus-client service"
             svc -t /service/dbus-modbus-client
-
-            # 5. Tell SetupHelper exactly where to look for updates online
-            logMessage "Registering GitHub parameters for SetupHelper"
-            mkdir -p /data/setupOptions/$packageGitHubRepo
-            echo "$packageGitHubUser" > /data/setupOptions/$packageGitHubRepo/githubUser
-            echo "$packageGitHubRepo" > /data/setupOptions/$packageGitHubRepo/githubRepo
-            echo "$packageGitHubBranch" > /data/setupOptions/$packageGitHubRepo/githubBranch
             
-            # 6. Refresh the GUI so it immediately shows as Active
+            # 5. Refresh the GUI so it immediately shows as Active
             restartGui=true
             
             return 0
