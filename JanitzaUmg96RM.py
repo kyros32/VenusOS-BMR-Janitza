@@ -60,11 +60,11 @@ class JANITZA_UMG_96RM(device.EnergyMeter):
         pRegs = None
         try:
             pRegs = [
-                Reg_f32b(19000 + s, '/Ac/L%d/Voltage' % n,        1, '%.3f V'),
-                Reg_f32b(19012 + s, '/Ac/L%d/Current' % n,        1, '%.3f A'),
-                Reg_f32b(19020 + s, '/Ac/L%d/Power' % n,          1, '%.3f W'),
-                Reg_f32b(19062 + s, '/Ac/L%d/Energy/Forward' % n, 1000, '%.3f kWh'),
-                Reg_f32b(19068 + s, '/Ac/L%d/Energy/Reverse' % n, 1000, '%.3f kWh'),
+                Reg_f32b(19000 + s, '/Ac/L%d/Voltage' % n,        1, '%.1f V'),
+                Reg_f32b(19012 + s, '/Ac/L%d/Current' % n,        1, '%.1f A'),
+                Reg_f32b(19020 + s, '/Ac/L%d/Power' % n,          1, '%.0f W'),
+                Reg_f32b(19062 + s, '/Ac/L%d/Energy/Forward' % n, 1000, '%.1f kWh'),
+                Reg_f32b(19068 + s, '/Ac/L%d/Energy/Reverse' % n, 1000, '%.1f kWh'),
             ]
         except:
             log.info('Janitza register Phase %d exception while Register f32'% n)
@@ -80,11 +80,11 @@ class JANITZA_UMG_96RM(device.EnergyMeter):
         gRegs = None
         try:
             gRegs = [
-                Reg_f32b(19026, '/Ac/Power',          1, '%.3f W'),
-                Reg_f32b(19018, '/Ac/Current',        1, '%.3f A'),
-                Reg_f32b(19050, '/Ac/Frequency',      1, '%.3f Hz'),
-                Reg_f32b(19068, '/Ac/Energy/Forward', 1000, '%.3f kWh'),
-                Reg_f32b(19076, '/Ac/Energy/Reverse', 1000, '%.3f kWh'),
+                Reg_f32b(19026, '/Ac/Power',          1, '%.0f W'),
+                Reg_f32b(19018, '/Ac/Current',        1, '%.1f A'),
+                Reg_f32b(19050, '/Ac/Frequency',      1, '%.2f Hz'),
+                Reg_f32b(19068, '/Ac/Energy/Forward', 1000, '%.1f kWh'),
+                Reg_f32b(19076, '/Ac/Energy/Reverse', 1000, '%.1f kWh'),
             ]
         except:
             log.info('Janitza device exception while Register f32')
@@ -131,11 +131,11 @@ class JANITZA_UMG_96PQ(device.EnergyMeter):
         pRegs = None
         try:
             pRegs = [
-                Reg_f32b(19000 + s, '/Ac/L%d/Voltage' % n,        1, '%.3f V'),
-                Reg_f32b(19012 + s, '/Ac/L%d/Current' % n,        1, '%.3f A'),
-                Reg_f32b(19020 + s, '/Ac/L%d/Power' % n,          1, '%.3f W'),
-                Reg_f32b(19062 + s, '/Ac/L%d/Energy/Forward' % n, 1000, '%.3f kWh'),
-                Reg_f32b(19068 + s, '/Ac/L%d/Energy/Reverse' % n, 1000, '%.3f kWh'),
+                Reg_f32b(19000 + s, '/Ac/L%d/Voltage' % n,        1, '%.1f V'),
+                Reg_f32b(19012 + s, '/Ac/L%d/Current' % n,        1, '%.1f A'),
+                Reg_f32b(19020 + s, '/Ac/L%d/Power' % n,          1, '%.0f W'),
+                Reg_f32b(19062 + s, '/Ac/L%d/Energy/Forward' % n, 1000, '%.1f kWh'),
+                Reg_f32b(19068 + s, '/Ac/L%d/Energy/Reverse' % n, 1000, '%.1f kWh'),
             ]
         except:
             log.info('Janitza register Phase %d exception while Register f32'% n)
@@ -151,11 +151,11 @@ class JANITZA_UMG_96PQ(device.EnergyMeter):
         gRegs = None
         try:
             gRegs = [
-                Reg_f32b(19026, '/Ac/Power',          1, '%.3f W'),
-                Reg_f32b(19018, '/Ac/Current',        1, '%.3f A'),
-                Reg_f32b(19050, '/Ac/Frequency',      1, '%.3f Hz'),
-                Reg_f32b(19068, '/Ac/Energy/Forward', 1000, '%.3f kWh'),
-                Reg_f32b(19076, '/Ac/Energy/Reverse', 1000, '%.3f kWh'),
+                Reg_f32b(19026, '/Ac/Power',          1, '%.0f W'),
+                Reg_f32b(19018, '/Ac/Current',        1, '%.1f A'),
+                Reg_f32b(19050, '/Ac/Frequency',      1, '%.2f Hz'),
+                Reg_f32b(19068, '/Ac/Energy/Forward', 1000, '%.1f kWh'),
+                Reg_f32b(19076, '/Ac/Energy/Reverse', 1000, '%.1f kWh'),
             ]
         except:
             log.info('Janitza device exception while Register f32')
@@ -202,11 +202,11 @@ class BMR_PLA(device.EnergyMeter):
         pRegs = None
         try:
             pRegs = [
-                Reg_f32b(19000 + s, '/Ac/L%d/Voltage' % n,        1, '%.3f V'),
-                Reg_f32b(19012 + s, '/Ac/L%d/Current' % n,        1, '%.3f A'),
-                Reg_f32b(19020 + s, '/Ac/L%d/Power' % n,          1, '%.3f W'),
-                Reg_f32b(19062 + s, '/Ac/L%d/Energy/Forward' % n, 1000, '%.3f kWh'),
-                Reg_f32b(19068 + s, '/Ac/L%d/Energy/Reverse' % n, 1000, '%.3f kWh'),
+                Reg_f32b(19000 + s, '/Ac/L%d/Voltage' % n,        1, '%.1f V'),
+                Reg_f32b(19012 + s, '/Ac/L%d/Current' % n,        1, '%.1f A'),
+                Reg_f32b(19020 + s, '/Ac/L%d/Power' % n,          1, '%.0f W'),
+                Reg_f32b(19062 + s, '/Ac/L%d/Energy/Forward' % n, 1000, '%.1f kWh'),
+                Reg_f32b(19068 + s, '/Ac/L%d/Energy/Reverse' % n, 1000, '%.1f kWh'),
             ]
         except:
             log.info('BMR PLA register Phase %d exception while Register f32'% n)
@@ -222,11 +222,11 @@ class BMR_PLA(device.EnergyMeter):
         gRegs = None
         try:
             gRegs = [
-                Reg_f32b(19026, '/Ac/Power',          1, '%.3f W'),
-                Reg_f32b(19018, '/Ac/Current',        1, '%.3f A'),
-                Reg_f32b(30154, '/Ac/Frequency',      1, '%.3f Hz'),
-                Reg_f32b(19068, '/Ac/Energy/Forward', 1000, '%.3f kWh'),
-                Reg_f32b(19076, '/Ac/Energy/Reverse', 1000, '%.3f kWh'),
+                Reg_f32b(19026, '/Ac/Power',          1, '%.0f W'),
+                Reg_f32b(19018, '/Ac/Current',        1, '%.1f A'),
+                Reg_f32b(30154, '/Ac/Frequency',      1, '%.2f Hz'),
+                Reg_f32b(19068, '/Ac/Energy/Forward', 1000, '%.1f kWh'),
+                Reg_f32b(19076, '/Ac/Energy/Reverse', 1000, '%.1f kWh'),
             ]
         except:
             log.info('BMR PLA device exception while Register f32')
