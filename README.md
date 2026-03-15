@@ -16,7 +16,24 @@ You must have [SetupHelper installed](https://github.com/kwindrem/SetupHelper) o
    /data/SetupHelper/setup
    ```
 
-**Install the Driver:**
+**Install the Driver (Automatically via Github):**
+You do not need to use SSH to install this driver! You can do it directly from your Cerbo GX Touchscreen or Remote Console.
+
+1. Go to Settings -> Package Manager -> Inactive Packages -> click on package named "new" on your Venus OS screen.
+
+2. Enter the following details:
+
+GitHub user: kyros32
+
+GitHub repository: VenusOS-BMR-Janitza
+
+Branch: main
+
+3. Tap "Proceed"
+
+4. The package will now appear in your list. Tap on VenusOS-BMR-Janitza and select Install.
+
+**Install the Driver (Manually via SSH):**
 1. Connect to your Cerbo GX via SSH.
 2. Run the following commands to download and install the package:
    ```bash
