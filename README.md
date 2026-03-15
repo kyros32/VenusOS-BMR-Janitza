@@ -18,7 +18,7 @@ You must have [SetupHelper installed](https://github.com/kwindrem/SetupHelper) o
 ## Installation of VenusOS-BMR-Janitza package
 **Install the Driver (Automatically via Github):**
 
-You do not need to use SSH to install this driver! You can do it directly from your Cerbo GX Touchscreen or Remote Console.
+You do not need to use SSH to install this driver! You can do it directly from your Cerbo GX Touchscreen or Remote Console. You can easily uninstall or update the driver directly from the touchscreen or Remote Console in the future without needing to SSH into your Cerbo GX.
 
    1. Go to Settings -> Package Manager -> Inactive Packages -> click on package named "new" on your Venus OS screen.
    2. Enter the following details:
@@ -45,8 +45,6 @@ You do not need to use SSH to install this driver! You can do it directly from y
    bash -x /data/VenusOS-BMR-Janitza/setup install
    ```
 3. Verification: Once installed, "VenusOS-BMR-Janitza" will appear in the Victron Remote Console / GUI under Settings -> Package Manager -> Active packages.
-
-You can easily uninstall or update the driver directly from the touchscreen or Remote Console in the future without needing to use SSH again.
 
 ## Supported Meters
 UMG 96 RM [all variations with Modbus RTU or Modbus TCP]
